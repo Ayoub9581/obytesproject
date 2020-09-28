@@ -19,13 +19,19 @@ class UpdatePost(TestCase):
         qs  = Status.objects.create(message="hello", user=self.owner)
         payload = {'message': 'message updated', 'user':self.owner}
         url = reverse('status:update-list', kwargs={'pk': qs.pk})
-        response = self.client.put(url , payload)
-        print(response)
+        response = self.client.put(url, payload)
         self.assertEqual(str(qs.user), str(self.user))
         self.assertEqual(response.status_code,status.HTTP_200_OK )
+        
+    def test_can_delete_status_by_owner(self, *args, **kwargs):
+        qs = Status.objects.create(message="hello", user=self.owner)
+        url = reverse('status:delete-list', kwargs={'pk': qs.pk})
+        response = self.client.post(url)
+        self.assertRedirects(response, reverse(
+            'status:message-list'), status_code=302)
+        self.assertEqual(str(qs.user), str(self.user))
 
-    def test_delete_status_by_owner(self):
-        pass
+
 
 
 class StatusTestCase(APITestCase):

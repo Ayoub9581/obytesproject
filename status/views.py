@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import CreateView, ListView, UpdateView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import  HttpResponseForbidden
 from .forms import  StatusForm
@@ -37,4 +38,8 @@ class StatusUpdateView(UpdateView):
     form_class = StatusForm
     template_name = 'status/add_message.html'
     success_url = '/status/add'
+    
 
+class StatusDeleteView(DeleteView):
+    mdodel = Status
+    uccess_url = reverse_lazy('status:message-list')
