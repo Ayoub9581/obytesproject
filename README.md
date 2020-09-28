@@ -16,7 +16,7 @@ create virtual environnement
 pip install requirements.txt
 ```
 
-## run app without docker
+## run app 
 
 ```
 python manage makemigrations 
@@ -26,5 +26,4 @@ python manage runserver
 ```
 
 
-## run app without docker
 
