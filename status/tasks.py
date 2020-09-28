@@ -9,8 +9,8 @@ from celery import task, shared_task
 
 @task()
 def delete_messages():
-    print(Status.objects.all())
-    # Status.objects.delete_old_message_over_10_days()
+    # print(Status.objects.all())
+    Status.objects.delete_old_message_over_10_days()
 
 
 # @celery_app.task
