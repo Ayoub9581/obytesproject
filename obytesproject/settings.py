@@ -1,5 +1,7 @@
 from pathlib import Path
 from decouple import config
+from celery.schedules import crontab
+
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -35,6 +37,7 @@ INSTALLED_APPS = [
     #third party app
     'rest_framework',
     'celery',
+    'django_celery_beat',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -141,7 +144,6 @@ DATABASES = {
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
         'HOST': config('DB_HOST'),
-        # 'PORT': config('DB_PORT'),
 
     }
 }
@@ -191,12 +193,8 @@ STATICFILES_DIRS = (
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-# Celery
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_SERIALIZER = "json"
-CELERY_ACKS_LATE = True
-CELERY_TIMEZONE = TIME_ZONE
+
+from datetime import timedelta
 
 
 # Celery
@@ -208,8 +206,20 @@ CELERY_TASK_EAGER_PROPAGATES = True
 CELERY_BROKER_URL = config("REDIS_URL")
 CELERY_RESULT_BACKEND = config("REDIS_URL")
 
-
-
+# Celery
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_ACKS_LATE = True
+CELERY_TIMEZONE = 'Asia/Makassar'
+CELERY_BEAT_SCHEDULE = {
+    'task-run-every-5-seconds': {
+        'task': 'status.tasks.delete_messages',
+        'schedule':timedelta(seconds=30),
+        # 'args': (*args)
+    },
+   
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

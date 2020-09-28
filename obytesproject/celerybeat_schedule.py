@@ -3,5 +3,5 @@ from celery.schedules import crontab
 
 CELERYBEAT_SCHEDULE = {
     # Internal tasks
-    "delete_messages": {"schedule": crontab(minute=1), "task": "status.tasks.delete_messages"},
+    "delete_messages": {"schedule": crontab(day_of_week='monday'), "task": "status.tasks.delete_messages"},
 }
