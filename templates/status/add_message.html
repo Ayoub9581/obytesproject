@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+add a message
+{% endblock title %}
+{% block content %}
+<div class="container mt-5">
+  <form class="text-center border border-light p-5" method="post">
+    {% csrf_token %}
+
+    <p class="h4 mb-4">add a message </p>
+
+
+
+    <!-- Message -->
+    <div class="form-group input-container">
+      {{form.message}}
+      <!-- <span class="suggestion-container">javascript</span> -->
+    </div>
+
+    <div class="chips chips-placeholder"></div>
+
+
+
+    <!-- Send button -->
+    <button class="btn btn-info btn-block" type="submit">Send</button>
+    <blockquote class="blockquote">
+      <footer class="blockquote-footer mb-3 text-right"><cite title="Source Title" id="counter-text">0/200</cite>
+      </footer>
+    </blockquote>
+    <div id="hashtag-add">
+
+
+    </div>
+  </form>
+</div>
+
+
+{% endblock content %}
+
+{% block javascript %}
+<script src="{% static 'js/utils.js' %}"></script>
+
+{% endblock javascript %}

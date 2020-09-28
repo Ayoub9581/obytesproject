@@ -1,0 +1,11 @@
+<div>
+    {% if object_list %}
+
+
+    {% for obj in object_list  %}
+    <a href="" class="click-hashtag" onclick="onClickHashtag(event,'#{{obj.tag}}')" value="#{{obj.tag}}"><span
+            class="badge badge-primary h">#{{obj.tag}}</span></a>
+    {% endfor %}
+    {% endif %}
+
+</div>
